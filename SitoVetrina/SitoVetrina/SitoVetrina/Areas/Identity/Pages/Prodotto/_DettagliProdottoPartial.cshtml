@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SitoVetrina.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model SitoVetrina.Areas.Identity.Pages.Prodotto.DettagliProdottoModel
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form id="Modifica-form" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-3">
+                <img src=@Model.prodotto.Immagine height="200">
+                <input asp-for=@Model.Input.Image class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for=@Model.Input.Image class="text-danger"></span>
+            </div>
+            <div class="col-9">
+                <h1>Descrizione</h1>
+                <div class="form-floating mt-3">
+                    <textarea asp-for="Input.Descrizione" class="form-control" autocomplete="username" aria-required="true" style="height:170px;max-height:200px" rows="3"></textarea>
+                    <label asp-for="Input.Descrizione" class="form-label">@Model.prodotto.Descrizione</label>
+                    <span asp-validation-for="Input.Descrizione" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-9">
+                <b>Codice Prodotto:</b> @Model.prodotto.CodiceProdotto
+                <br />
+                <div class="row">
+                    <div class="col-3">
+                        <b>Prezzo:</b>
+                        <div class="form-floating mt-3">
+                            <input asp-for="Input.Prezzo" class="form-control" autocomplete="username" aria-required="true" value="@Model.prodotto.Prezzo" />
+                            <label asp-for="Input.Prezzo" class="form-label"></label>
+                            <span asp-validation-for="Input.Prezzo" class="text-danger"></span>
+                        </div>
+                        <b>Nome:</b>
+                        <div class="form-floating mt-3">
+                            <input asp-for="Input.NomeProdotto" class="form-control" autocomplete="username" aria-required="true" value="@Model.prodotto.Nome" />
+                            <label asp-for="Input.NomeProdotto" class="form-label"></label>
+                            <span asp-validation-for="Input.NomeProdotto" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <button id="Modifica" type="submit" class="w-100 btn btn-lg btn-primary mt-5">Modifica</button>
+                <hr />
+                <input asp-for=@Model.Input.elimina type="submit" class="w-100 btn btn-lg btn-danger" value="Elimina">
+            </div>
+        </div> 
+    </form>
+}
+else
+{
+    <div class="row">
+        <div class="col-3">
+            <img src=@Model.prodotto.Immagine height="200">
+        </div>
+        <div class="col-9">
+            <h1>Descrizione</h1>
+            @Model.prodotto.Descrizione
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-9">
+            <b>Codice Prodotto:</b> @Model.prodotto.CodiceProdotto
+            <br />
+            <b>Prezzo:</b> @Model.prodotto.Prezzo €
+        </div>
+    </div>
+}

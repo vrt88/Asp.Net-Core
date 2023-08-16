@@ -1,0 +1,40 @@
+﻿@model SitoVetrina.Repository.IndexRepository
+@{
+    ViewData["Title"] = "Home";
+}
+<form id="account" method="post">
+    @if (Model.ListProdotti.Count == 0)
+    {
+        <div class="text-center">
+            <h1>Nessun prodotto trovato</h1>
+        </div>
+    }
+    else
+    {
+        <div class="album bg-body-tertiary">
+            <div class="container-fluid my-5">
+                <div class="row">
+                    @foreach (var item in Model.ListProdotti)
+                    {
+                        <div class="col-3">
+                            <div class="card shadow-sm" >
+                                <div class="card-img-bottom" style="height:200px">
+                                    <a asp-area="Identity" asp-page="/Prodotto/DettagliProdotto" asp-route-id=@item.CodiceProdotto><img class="card-img-top" src=Images\\@item.Immagine height="200"></a>
+                                </div>
+                                <div class="card-body bg-info">
+                                    <h1 style="font-size:medium">@item.Nome.Replace('"', '\'')</h1>
+                                    <h2 style="font-size:medium">@string.Format("{0:F2}",@item.Prezzo) €</h2>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</form>
+@section cerca{
+    <form class="col-12 col-lg-8 mb-3 mb-lg-0 me-auto" role="search" action="/">
+        <input asp-page="/" asp-route-id=@Model.testoRicerca asp-for=@Model.testoRicerca id ="searchBar" type="text" class="form-control" placeholder="Search..." aria-label="Search">
+    </form>
+}
